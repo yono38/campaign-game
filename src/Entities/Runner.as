@@ -8,13 +8,25 @@ package Entities
 
   public class Runner extends FlxSprite
   {
-    [Embed(source = '../../gfx/chars/littleClinton.png')] private var littleClinton:Class;
+    [Embed(source = '../../gfx/chars/littleReagan.png')] public var reaganHeadPic:Class;
+    [Embed(source = '../../gfx/chars/littleDubya.png')] public var dubyaHeadPic:Class;
+    [Embed(source = '../../gfx/chars/littleSchwartzenegger.png')] public var schwartzeneggerHeadPic:Class;
+    
+    [Embed(source = '../../gfx/chars/littleObama.png')] public var obamaHeadPic:Class;    
+    [Embed(source = '../../gfx/chars/littleClinton.png')] public var clintonHeadPic:Class;    
+    private var heads:Array;
     private var xSpeed:Number;
     private var ySpeed:Number;
     private var user:User;
     public function Runner(xpos:uint, ypos:uint, plyr:User) 
     {
-      loadGraphic(littleClinton);
+      heads = [[obamaHeadPic, clintonHeadPic], [reaganHeadPic, schwartzeneggerHeadPic, dubyaHeadPic]];
+      if (plyr.isBlue) {
+        loadGraphic(heads[0][plyr.myChar]);
+      }
+      else {
+        loadGraphic(heads[1][plyr.myChar]);
+      }
       x = xpos;
       y = ypos;
       xSpeed = ySpeed = 2;

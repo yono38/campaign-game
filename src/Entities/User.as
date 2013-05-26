@@ -14,6 +14,7 @@ package Entities
     public var signs:uint;
     public var voters:int;
     public var head:Class;
+    public var myChar:uint;
     private var names:Array;
     private var heads:Array;
     
@@ -32,6 +33,7 @@ package Entities
       isBlue = colorBlue;
       power = 0;
       voters = 0;
+      myChar = char;
       if (colorBlue) {
         name = names[0][char];
         head = heads[0][char];

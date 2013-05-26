@@ -47,7 +47,7 @@ package Entities
         speech.makeGraphic(15, 12, color);
       }
       else if (name == "radio") {
-        for (var i:int = 0; i < radios.members.length; i++) {
+        for (var i:int = 0; i < radios.length; i++) {
           radios.members[i].makeGraphic(8, 8, color);
         }
       }

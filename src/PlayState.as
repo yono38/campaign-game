@@ -68,7 +68,7 @@ package
       //Set the background color to light gray (0xAARRGGBB)
 			FlxG.bgColor = 0xffaaaaaa;
       var i:int;
-      prices = [5, 2000, 1000, 5000];
+      prices = [5, 1000, 2000, 5000];
     //  prices = [5, 10, 20, 50]; // test
       startTime = FlxU.getTicks();
       currDayInt = 0;
@@ -238,6 +238,8 @@ package
           for (var i:int = 0; i < 4; i++) {
             radios.members[i].purchase(true)
           }
+          legend.purchased("radio", true);                            
+
         }
       }
       // TV
@@ -278,8 +280,10 @@ package
           P2.cash -= prices[1];
           prices[1] *= 1.5;              
           for (var i:int = 0; i < 4; i++) {
-            radios.members[i].purchase(false)
+            radios.members[i].purchase(false);
           }
+          legend.purchased("radio", false);                            
+          
         }
       }
       // TV
