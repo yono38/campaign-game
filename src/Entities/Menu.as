@@ -87,22 +87,30 @@ package Entities
 			add(voterText);			
       
 			// items
-			signText = new FlxText(x + 30, 240, 300, "> Sign: $");
+      var keys:Array;
+      if (isLeft) {
+        keys = [1, 2, 3, 4];
+      }
+      else {
+        keys = [7, 8, 9, 0];
+      }
+      
+			signText = new FlxText(x + 30, 240, 300, keys[0]+") Sign: $");
 			signText.size = 21;
 			signText.color = color;
 			add(signText);
 			
-			radioText = new FlxText(x + 30, 300, 300, "Radio: $1000");
+			radioText = new FlxText(x + 30, 300, 300, keys[1]+") Radio: $1000");
 			radioText.size = 21;
 			radioText.color = color;
 			add(radioText);
 			
-			tvText = new FlxText(x + 30, 360, 500, "TV: $2000");
+			tvText = new FlxText(x + 30, 360, 500, keys[2]+") TV: $2000");
 			tvText.size = 21;
 			tvText.color = color;
 			add(tvText);
 			
-			speechText = new FlxText(x + 30, 420, 300, "Speech: $5000");
+			speechText = new FlxText(x + 30, 420, 300, keys[3]+ ") Speech: $5000");
 			speechText.size = 21;
 			speechText.color = color;
 			add(speechText);
@@ -149,6 +157,8 @@ package Entities
 		
 		}
 		
+    /*
+    // Deprecated 
 		public function upMenu():void
 		{
 			if (arrowPos != 0)
@@ -168,5 +178,6 @@ package Entities
 				itemArray[arrowPos].text = "> " + itemArray[arrowPos].text;
 			}
 		}
+    */
 	}
 }
