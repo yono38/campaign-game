@@ -14,14 +14,18 @@ package
 
     [Embed(source = '../gfx/chars/obamaHead.png')] private var obamaHeadPic:Class;    
     [Embed(source = '../gfx/chars/clintonHead.png')] private var clintonHeadPic:Class;    
+    [Embed(source = '../gfx/chars/jfkHead.png')] private var jfkHeadPic:Class;    
     
     [Embed(source = '../gfx/chars/obama.png')] private var obamaBody:Class;
     [Embed(source = '../gfx/chars/clinton.png')] private var clintonBody:Class;
+    [Embed(source = '../gfx/chars/jfk.png')] private var jfkBody:Class;
+    
     private var demNameList:Array;    
     private var demName:FlxText;
     private var demChar:FlxSprite;
     private var demBg1:FlxSprite;
     private var demBg2:FlxSprite;
+    private var demBg3:FlxSprite;    
     private var demBodies:Array;
     private var demHeadBgs:Array;
     private var demState:uint;
@@ -145,11 +149,11 @@ package
       demName.size = 25;
       add(demName);
       
-      demNameList = ["Obama", "Clinton"]
-      demBodies = [obamaBody, clintonBody];
-      var demHeads:Array = [obamaHeadPic, clintonHeadPic];
-      demHeadBgs = [demBg1, demBg2];
-      for (i = 0; i < 2; i++) {
+      demNameList = ["Obama", "Clinton", "JFK"]
+      demBodies = [obamaBody, clintonBody, jfkBody];
+      var demHeads:Array = [obamaHeadPic, clintonHeadPic, jfkHeadPic];
+      demHeadBgs = [demBg1, demBg2, demBg3];
+      for (i = 0; i < demHeadBgs.length; i++) {
         demHeadBgs[i] = new FlxSprite(50, 80 + i * 200 );
         demHeadBgs[i].makeGraphic(127, 127, 0xffbbbbbb);
         var demHeadPic:FlxSprite = new FlxSprite(50, 80 + i * 200 );
@@ -206,7 +210,7 @@ package
       }
       
       // left menu
-      if (FlxG.keys.justPressed("S") && demState < 1) {
+      if (FlxG.keys.justPressed("S") && demState < 2) {
         // move down
         demState++;
         setDemState();

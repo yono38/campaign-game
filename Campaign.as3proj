@@ -17,7 +17,6 @@
   <classpaths>
     <class path="src" />
     <class path="..\..\..\..\..\flixel" />
-    <class path="..\..\..\..\Documents\Game Dev\Flixel Projects\Flixel" />
   </classpaths>
   <!-- Build options -->
   <build>

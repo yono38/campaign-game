@@ -14,13 +14,15 @@ package Entities
     
     [Embed(source = '../../gfx/chars/littleObama.png')] public var obamaHeadPic:Class;    
     [Embed(source = '../../gfx/chars/littleClinton.png')] public var clintonHeadPic:Class;    
+    [Embed(source = '../../gfx/chars/littleJFK.png')] public var jfkHeadPic:Class;    
+
     private var heads:Array;
     private var xSpeed:Number;
     private var ySpeed:Number;
     private var user:User;
     public function Runner(xpos:uint, ypos:uint, plyr:User) 
     {
-      heads = [[obamaHeadPic, clintonHeadPic], [reaganHeadPic, schwartzeneggerHeadPic, dubyaHeadPic]];
+      heads = [[obamaHeadPic, clintonHeadPic, jfkHeadPic], [reaganHeadPic, schwartzeneggerHeadPic, dubyaHeadPic]];
       if (plyr.isBlue) {
         loadGraphic(heads[0][plyr.myChar]);
       }

@@ -24,11 +24,12 @@ package Entities
     
     [Embed(source = '../../gfx/chars/obamaHead.png')] public var obamaHeadPic:Class;    
     [Embed(source = '../../gfx/chars/clintonHead.png')] public var clintonHeadPic:Class;   
+    [Embed(source = '../../gfx/chars/jfkHead.png')] public var jfkHeadPic:Class;   
     
     public function User(char:uint, startCash:uint, colorBlue:Boolean) 
     {
-      names = [["Barack Obama", "Bill Clinton"], ["Ronald Reagan", "The Governator", "George Dubya"]];
-      heads = [[obamaHeadPic, clintonHeadPic], [reaganHeadPic, schwartzeneggerHeadPic, dubyaHeadPic]];
+      names = [["Barack Obama", "Bill Clinton", "John F. Kennedy"], ["Ronald Reagan", "The Governator", "George Dubya"]];
+      heads = [[obamaHeadPic, clintonHeadPic, jfkHeadPic], [reaganHeadPic, schwartzeneggerHeadPic, dubyaHeadPic]];
       cash = startCash;
       isBlue = colorBlue;
       power = 0;
