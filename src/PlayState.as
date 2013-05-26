@@ -159,8 +159,8 @@ package
       convos = new FlxGroup();
       
       // these hold user attributes
-      P1 = new User("Jimmy Carter", 200, false);
-      P2 = new User("Sarah Palin", 200, true);
+      P1 = new User(FlxG["players"][0], 200, false);
+      P2 = new User(FlxG["players"][1], 200, true);
       
       // this is basic HUD
       P1menu = new Menu(P1, true, prices);

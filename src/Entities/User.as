@@ -13,14 +13,33 @@ package Entities
     public var name:String;
     public var signs:uint;
     public var voters:int;
+    public var head:Class;
+    private var names:Array;
+    private var heads:Array;
     
-    public function User(nme:String, startCash:uint, colorBlue:Boolean) 
+    [Embed(source = '../../gfx/chars/reaganHead.png')] public var reaganHeadPic:Class;
+    [Embed(source = '../../gfx/chars/dubyaHead.png')] public var dubyaHeadPic:Class;
+    [Embed(source = '../../gfx/chars/schwartzeneggerHead.png')] public var schwartzeneggerHeadPic:Class;
+    
+    [Embed(source = '../../gfx/chars/obamaHead.png')] public var obamaHeadPic:Class;    
+    [Embed(source = '../../gfx/chars/clintonHead.png')] public var clintonHeadPic:Class;   
+    
+    public function User(char:uint, startCash:uint, colorBlue:Boolean) 
     {
+      names = [["Barack Obama", "Bill Clinton"], ["Ronald Reagan", "The Governator", "George Dubya Bush"]];
+      heads = [[obamaHeadPic, clintonHeadPic], [reaganHeadPic, schwartzeneggerHeadPic, dubyaHeadPic]];
       cash = startCash;
       isBlue = colorBlue;
       power = 0;
       voters = 0;
-      name = nme;
+      if (colorBlue) {
+        name = names[1][char];
+        head = heads[1][char];
+      }
+      else {
+        name = names[0][char];
+        head = heads[0][char];
+      }
       signs = 0;
     }
     

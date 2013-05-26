@@ -11,6 +11,7 @@ package Entities
 	{
 		// all the textings
 		public var headerText:FlxText;
+    public var headPic:FlxSprite;
 		public var cashText:FlxText;
 		public var signText:FlxText;
 		public var radioText:FlxText;
@@ -65,36 +66,43 @@ package Entities
 			headerText.size = 20
 			headerText.color = color;
 			add(headerText);
+      
+      // avatar
+      headPic = new FlxSprite(x + 40, 30);
+      headPic.loadGraphic(myusr.head);
+      headPic.scale.x = 0.5;
+      headPic.scale.y = 0.5;
+      add(headPic);
 			
 			// cash
-			cashText = new FlxText(x + 20, 60, 300, "$" + usr.cash.toFixed(2));
+			cashText = new FlxText(x + 20, 140, 300, "$" + usr.cash.toFixed(2));
 			cashText.size = 21;
 			cashText.color = color;
 			add(cashText);
 
 			// cash
-			voterText = new FlxText(x + 20, 100, 300, "$" + usr.voters);
+			voterText = new FlxText(x + 20, 180, 300, "$" + usr.voters);
 			voterText.size = 21;
 			voterText.color = color;
 			add(voterText);			
       
 			// items
-			signText = new FlxText(x + 30, 160, 300, "> Sign: $");
+			signText = new FlxText(x + 30, 240, 300, "> Sign: $");
 			signText.size = 21;
 			signText.color = color;
 			add(signText);
 			
-			radioText = new FlxText(x + 30, 240, 300, "Radio: $1000");
+			radioText = new FlxText(x + 30, 300, 300, "Radio: $1000");
 			radioText.size = 21;
 			radioText.color = color;
 			add(radioText);
 			
-			tvText = new FlxText(x + 30, 320, 300, "TV: $2000");
+			tvText = new FlxText(x + 30, 360, 500, "TV: $2000");
 			tvText.size = 21;
 			tvText.color = color;
 			add(tvText);
 			
-			speechText = new FlxText(x + 30, 400, 300, "Speech: $5000");
+			speechText = new FlxText(x + 30, 420, 300, "Speech: $5000");
 			speechText.size = 21;
 			speechText.color = color;
 			add(speechText);
@@ -109,16 +117,33 @@ package Entities
 			cashText.text = "$" + usr.cash.toFixed(2);
       voterText.text = "Voters: " + usr.voters;
 			var txtarr:Array = (signText.text).split("$");
-      signText.text = txtarr[0] + "$" + ((50 + 15 * Math.pow(usr.signs, 2))).toFixed(0);
-
+      var signPrice:Number = ((50 + 15 * Math.pow(usr.signs, 2)));
+      signText.text = txtarr[0] + "$" + signPrice.toFixed(0);
+      if (usr.cash < signPrice) {
+        signText.color = 0xffbbbbbb;
+      }
+      else { signText.color = color; }
+      
 			txtarr = (radioText.text).split("$");
       radioText.text = txtarr[0] + "$" + (priceArr[1]).toFixed(0);
+      if (usr.cash < priceArr[1]) {
+        radioText.color = 0xffbbbbbb;        
+      }
+      else { radioText.color = color; }
       
 			txtarr = (tvText.text).split("$");
       tvText.text = txtarr[0] + "$" + (priceArr[2]).toFixed(0);
+      if (usr.cash < priceArr[2]) {
+        tvText.color = 0xffbbbbbb;        
+      }
+      else { tvText.color = color; }
       
       txtarr = (speechText.text).split("$");
       speechText.text = txtarr[0] + "$" + (priceArr[3]).toFixed(0);
+            if (usr.cash < priceArr[3]) {
+        speechText.color = 0xffbbbbbb;        
+      }
+      else { speechText.color = color; }
       
 			super.update();
 		
