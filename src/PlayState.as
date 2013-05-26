@@ -311,7 +311,7 @@ package
       currDayInt = Math.floor((FlxU.getTicks() - startTime) / 4000);
       if (currDayInt <= 60) {
         // spawn random events
-        if (currDayInt == 25 || currDayInt == 40 || currDayInt == 55) {
+        if (currDayInt%13 == 0 && currDayInt >1) {
      //   if (currDayInt == 7 || currDayInt == 3 || currDayInt == 5){ // testing
           var chance:Number = Math.random();
           if (chance <= 0.005 && lastEventDay != currDayInt) {

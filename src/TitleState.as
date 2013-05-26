@@ -11,9 +11,7 @@ package
 		private var click:FlxText;
     
     [Embed(source = '../gfx/political_pixel_title.png')] private var titlePic:Class;
-    [Embed(source = '../gfx/WASD.png')] private var WASD:Class;
-    [Embed(source = '../gfx/ArrowKeys.png')] private var ArrowKeys:Class;
-    
+
     [Embed(source = '../gfx/chars/obamaHead.png')] private var obamaHeadPic:Class;    
     [Embed(source = '../gfx/chars/clintonHead.png')] private var clintonHeadPic:Class;    
     
@@ -73,23 +71,35 @@ package
 			controlsText.size = 40;		      
       add(controlsText);
       
-			p1 = new FlxText(20, 300, FlxG.width - 40, "Player 1:                       ");
+			p1 = new FlxText(20, 320, FlxG.width - 40, "Player 1:                       ");
 			p1.color = txtColor;
       p1.alignment = "center";
 			p1.size = 35;			
       
-      var p1ctrl:FlxSprite = new FlxSprite(FlxG.width/2, 300);
-      p1ctrl.loadGraphic(WASD);
-      add(p1ctrl);
+    //  var p1ctrl:FlxSprite = new FlxSprite(FlxG.width/2, 300);
+    //  p1ctrl.loadGraphic(WASD);
+    //  add(p1ctrl);
+    
+      var WASDkeys:FlxGroup = addKeys(0);
+      add(WASDkeys);
       
-			p2 = new FlxText(20, 400, FlxG.width - 40, "Player 2:                       ");
+      var WASDkeytxt:FlxGroup = addWASDText();
+      add(WASDkeytxt);
+      
+      var Arrowkeys:FlxGroup = addKeys(100);
+      add(Arrowkeys);
+
+      var Arrowkeytxt:FlxGroup = addArrowText();
+      add(Arrowkeytxt);      
+      
+			p2 = new FlxText(20, 420, FlxG.width - 40, "Player 2:                       ");
 			p2.color = txtColor;
       p2.alignment = "center";
 			p2.size = 35;		
 
-      var p2ctrl:FlxSprite = new FlxSprite(FlxG.width/2, 400);
-      p2ctrl.loadGraphic(ArrowKeys);
-      add(p2ctrl); 
+    //  var p2ctrl:FlxSprite = new FlxSprite(FlxG.width/2, 400);
+    //  p2ctrl.loadGraphic(ArrowKeys);
+    //  add(p2ctrl); 
       
       var numctrl:FlxText = new FlxText(FlxG.width/2-250, FlxG.height - 250, 500, "Use the number keys to purchase items");
       numctrl.alignment = "center";
@@ -235,6 +245,66 @@ package
       demName.text = demNameList[demState];      
       demChar.loadGraphic(demBodies[demState]);
       FlxG["players"][0] = demState;
+    }
+    
+    protected function addKeys(ypos:uint):FlxGroup {
+      var myKeys:FlxGroup = new FlxGroup();     
+      var topSquare:FlxSprite = new FlxSprite(785, 300+ypos);
+      topSquare.makeGraphic(50, 50, 0xff000000);
+      myKeys.add(topSquare);
+      var btmleft:FlxSprite = new FlxSprite(740, 352+ypos);
+      btmleft.makeGraphic(43, 43, 0xff000000);
+      myKeys.add(btmleft);
+      var btmctr:FlxSprite = new FlxSprite(785, 352+ypos);
+      btmctr.makeGraphic(43, 43, 0xff000000);
+      myKeys.add(btmctr);
+      var btmrght:FlxSprite = new FlxSprite(830, 352+ypos);
+      btmrght.makeGraphic(43, 43, 0xff000000);
+      myKeys.add(btmrght); 
+      return myKeys;
+    }
+    
+    protected function addWASDText():FlxGroup {
+      var WASDtxt:FlxGroup = new FlxGroup();
+      var Wkey:FlxText = new FlxText(790, 300, 50, "W");
+      Wkey.color = 0xffffffff;
+      Wkey.size = 35;
+      WASDtxt.add(Wkey);
+      var Akey:FlxText = new FlxText(745, 353, 50, "A");
+      Akey.color = 0xffffffff;
+      Akey.size = 35;
+      WASDtxt.add(Akey);
+      var Skey:FlxText = new FlxText(795, 353, 50, "S");
+      Skey.color = 0xffffffff;
+      Skey.size = 35;
+      WASDtxt.add(Skey); 
+      var Dkey:FlxText = new FlxText(835, 353, 50, "D");
+      Dkey.color = 0xffffffff;
+      Dkey.size = 35;
+      WASDtxt.add(Dkey);      
+      return WASDtxt;
+    }
+    
+    protected function addArrowText():FlxGroup {
+      var Arrowtxt:FlxGroup = new FlxGroup();
+      var Upkey:FlxText = new FlxText(795, 400, 50, "^");
+      Upkey.color = 0xffffffff;
+      Upkey.size = 65;
+      Arrowtxt.add(Upkey);
+      var Leftkey:FlxText = new FlxText(745, 453, 50, "<");
+      Leftkey.color = 0xffffffff;
+      Leftkey.size = 35;
+      Arrowtxt.add(Leftkey);
+      var Downkey:FlxText = new FlxText(790, 453, 50, "V");
+      Downkey.color = 0xffffffff;
+      Downkey.size = 35;
+      Arrowtxt.add(Downkey); 
+      var Rightkey:FlxText = new FlxText(835, 453, 50, ">");
+      Rightkey.color = 0xffffffff;
+      Rightkey.size = 35;
+      Arrowtxt.add(Rightkey);      
+      return Arrowtxt;
     }    
+    
 	}
 }
