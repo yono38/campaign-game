@@ -309,7 +309,7 @@ package
       
       // Move to next day
       currDayInt = Math.floor((FlxU.getTicks() - startTime) / 4000);
-      if (currDayInt <= 60) {
+      if (currDayInt <= 3) {
         // spawn random events
         if (currDayInt%13 == 0) {
      //   if (currDayInt == 7 || currDayInt == 3 || currDayInt == 5){ // testing
@@ -375,15 +375,30 @@ package
         add(endgameFade);
         var gameOver:FlxText;
         var restartTxt:FlxText;
+        var newCharTxt:FlxText;
         if (P1.voters > P2.voters) {
           gameOver = new FlxText(FlxG.width / 2 - 250, FlxG.height / 2 - 30, 700, P1.name+" Wins!");
           gameOver.color = 0xff0000ff;
+          if (FlxG["demUnlocked"] == false) {
+            newCharTxt = new FlxText(FlxG.width / 2 - 250, FlxG.height / 2 + 30, 500, "New Character Unlocked: JFK");
+            newCharTxt.color = 0xff0000ff;
+            newCharTxt.size = 30;
+            add(newCharTxt);
+          }          
+          FlxG["demUnlocked"] = true;
         }
         else {
           gameOver = new FlxText(FlxG.width / 2 - 250, FlxG.height / 2 - 30, 700, P2.name+" Wins!");
           gameOver.color = 0xffff0000;
+          if (FlxG["repUnlocked"] == false) {
+            newCharTxt = new FlxText(FlxG.width / 2 - 250, FlxG.height / 2 + 30, 500, "New Character Unlocked: Dubya");
+            newCharTxt.color = 0xffff0000;
+            newCharTxt.size = 30;
+            add(newCharTxt);
+          }
+          FlxG["repUnlocked"] = true;
         }
-        var restartTxt:FlxText = new FlxText(FlxG.width / 2 - 250, FlxG.height / 2 + 30, 500, "Click to Play Again");
+        restartTxt = new FlxText(FlxG.width / 2 - 250, FlxG.height / 2 + 120, 500, "Click to Play Again");
         restartTxt.size = 30;
         add(restartTxt);
         gameOver.size = 40;

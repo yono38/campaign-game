@@ -29,6 +29,8 @@ package
     private var demBodies:Array;
     private var demHeadBgs:Array;
     private var demState:uint;
+    // takes care of locked secret character
+    private var demTotal:uint;
     
     [Embed(source = '../gfx/chars/reagan.png')] private var reaganBody:Class;
     [Embed(source = '../gfx/chars/schwartzenegger.png')] private var schwartzeneggerBody:Class;
@@ -46,6 +48,7 @@ package
     private var repBodies:Array;
     private var repHeadBgs:Array;    
     private var repState:uint;
+    private var repTotal:uint;
 
 
     
@@ -130,7 +133,8 @@ package
       var repHeads:Array = [reaganHeadPic, schwartzeneggerHeadPic, dubyaHeadPic];
       repHeadBgs = [repBg1, repBg2, repBg3];
       var i:uint;
-      for (i = 0; i < 3; i++) {
+      repTotal = (FlxG["repUnlocked"]) ? 3 : 2;
+      for (i = 0; i < repTotal; i++) {
         // sets up menu choices
         repHeadBgs[i] = new FlxSprite(FlxG.width - 177, 80 + i * 200 );
         repHeadBgs[i].makeGraphic(127, 127, 0xffbbbbbb);
@@ -138,6 +142,15 @@ package
         repHeadPic.loadGraphic(repHeads[i]);
         add(repHeadBgs[i]);
         add(repHeadPic);
+      }
+      // holds unknown box
+      if (!FlxG["repUnlocked"]) {
+        repHeadBgs[repTotal] = new FlxSprite(FlxG.width - 177, 480 );
+        repHeadBgs[repTotal].makeGraphic(127, 127, 0xff000000);
+        add(repHeadBgs[repTotal]);
+        var repUnknown:FlxText = new FlxText(FlxG.width - 155, 470, 500, "?");
+        repUnknown.size = 400;
+        add(repUnknown);
       }
       // holds full body image
       repChar = new FlxSprite(1075, 80);
@@ -153,7 +166,8 @@ package
       demBodies = [obamaBody, clintonBody, jfkBody];
       var demHeads:Array = [obamaHeadPic, clintonHeadPic, jfkHeadPic];
       demHeadBgs = [demBg1, demBg2, demBg3];
-      for (i = 0; i < demHeadBgs.length; i++) {
+      demTotal = (FlxG["demUnlocked"]) ? 3 : 2;
+      for (i = 0; i < demTotal; i++) {
         demHeadBgs[i] = new FlxSprite(50, 80 + i * 200 );
         demHeadBgs[i].makeGraphic(127, 127, 0xffbbbbbb);
         var demHeadPic:FlxSprite = new FlxSprite(50, 80 + i * 200 );
@@ -161,6 +175,14 @@ package
         add(demHeadBgs[i]);
         add(demHeadPic);
       }
+      if (!FlxG["demUnlocked"]) {
+        demHeadBgs[demTotal] = new FlxSprite(50, 480 );
+        demHeadBgs[demTotal].makeGraphic(127, 127, 0xff000000);
+        add(demHeadBgs[demTotal]);
+        var demUnknown:FlxText = new FlxText(75, 470, 500, "?");
+        demUnknown.size = 400;
+        add(demUnknown);
+      }      
       demChar = new FlxSprite(200, 80);
       add(demChar);
       
@@ -198,7 +220,7 @@ package
 		override public function update():void
 		{
       // right menu
-      if (FlxG.keys.justPressed("DOWN") && repState < 2) {
+      if (FlxG.keys.justPressed("DOWN") && repState < repTotal-1) {
         // move down
         repState++;
         setRepState();
@@ -210,7 +232,7 @@ package
       }
       
       // left menu
-      if (FlxG.keys.justPressed("S") && demState < 2) {
+      if (FlxG.keys.justPressed("S") && demState < demTotal-1) {
         // move down
         demState++;
         setDemState();
@@ -231,7 +253,7 @@ package
     
     protected function setRepState():void {
       var i:uint;
-      for (i = 0; i < repHeadBgs.length;i++){
+      for (i = 0; i < repTotal;i++){
         if (i == repState) { repHeadBgs[i].makeGraphic(127, 127, 0xbbff0000); }
         else {repHeadBgs[i].makeGraphic(127, 127, 0xffbbbbbb);}
       }
@@ -242,7 +264,7 @@ package
     
     protected function setDemState():void {
       var i:uint;
-      for (i = 0; i < demHeadBgs.length;i++){
+      for (i = 0; i < demTotal;i++){
         if (i == demState) { demHeadBgs[i].makeGraphic(127, 127, 0xbb0000ff); }
         else {demHeadBgs[i].makeGraphic(127, 127, 0xffbbbbbb);}
       }

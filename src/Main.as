@@ -13,10 +13,12 @@ package
  {
   public function Main():void
   {
- //  super(1500, 790, TitleState, 0.5); small version
- FlxG["players"] = new Array();
-  super(1500, 790, TitleState, 1); // original size version
-    useSoundHotKeys = false;
+   //  super(1500, 790, TitleState, 0.5); small version
+   FlxG["players"] = new Array();
+   FlxG["demUnlocked"] = false;
+   FlxG["repUnlocked"] = false;
+   super(1500, 790, TitleState, 1); // original size version
+   useSoundHotKeys = false;
 
 
   }
