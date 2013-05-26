@@ -33,12 +33,12 @@ package Entities
       power = 0;
       voters = 0;
       if (colorBlue) {
-        name = names[1][char];
-        head = heads[1][char];
-      }
-      else {
         name = names[0][char];
         head = heads[0][char];
+      }
+      else {
+        name = names[1][char];
+        head = heads[1][char];
       }
       signs = 0;
     }

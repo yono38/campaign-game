@@ -49,7 +49,6 @@ package
 		{
 			var txtColor:uint = 0xFF000000;
       
-      
       // Center Area 
       var titleImg:FlxSprite = new FlxSprite(0, 0);
       titleImg.alpha = 0.35;

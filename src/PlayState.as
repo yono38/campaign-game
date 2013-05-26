@@ -37,6 +37,9 @@ package
     protected var P1menu:Menu;
     public var P2:User;
     protected var P2menu:Menu;
+    public var P1Runner:Runner;
+    public var P2Runner:Runner;
+
     // used to determine default prices for items
     public var prices:Array;
     // static items
@@ -66,6 +69,7 @@ package
 			FlxG.bgColor = 0xffaaaaaa;
       var i:int;
       prices = [5, 2000, 1000, 5000];
+    //  prices = [5, 10, 20, 50]; // test
       startTime = FlxU.getTicks();
       currDayInt = 0;
       gameOverTime = false;
@@ -79,10 +83,10 @@ package
       makeBlock(706, 58, 167, 135);
       makeBlock(909, 58, 209, 135);
       makeBlock(708, 229, 410, 134);
-      makeBlock(616, 400, 323, 137);
-      makeBlock(386, 556, 293, 113);
+      makeBlock(616, 400, 320, 133);
+      makeBlock(386, 560, 293, 109);
       makeBlock(465, 448, 43, 44);
-      makeBlock(569, 667, 525, 100);      
+      makeBlock(569, 674, 520, 100);      
       
       // left side
       makeBlock(0, 0, 1500, 21);
@@ -94,7 +98,7 @@ package
       
       // right side
       makeBlock(1158, 24, 342, 378);
-      makeBlock(964, 400, 534, 138);
+      makeBlock(964, 400, 534, 132);
       makeBlock(1096, 536, 412, 36);
       makeBlock(760, 558, 742, 90);
       makeBlock(1114, 652, 390, 112); 
@@ -159,8 +163,8 @@ package
       convos = new FlxGroup();
       
       // these hold user attributes
-      P1 = new User(FlxG["players"][0], 200, false);
-      P2 = new User(FlxG["players"][1], 200, true);
+      P1 = new User(FlxG["players"][0], 200, true);
+      P2 = new User(FlxG["players"][1], 200, false);
       trace("Players in Playstate");
       trace(FlxG["players"]);
       // this is basic HUD
@@ -168,6 +172,12 @@ package
       add(P1menu);
       P2menu = new Menu(P2, false, prices);
       add(P2menu);
+      
+      // runner test
+      P1Runner = new Runner(655, 200, P1);
+      add(P1Runner);
+      P2Runner = new Runner(680, 185, P2);
+      add(P2Runner);      
       
       progressBar = new FlxSprite(735, 735); // range from 335 to 1135      
       progressBar.makeGraphic(20, 50, 0xff000000);
@@ -202,117 +212,98 @@ package
       // activates conversations
       FlxG.overlap(peds, peds, convo);
       
-      if(FlxG.keys.justPressed("W"))
-      {
-        P1menu.upMenu();
-      }
-      else if(FlxG.keys.justPressed("S"))
-      {
-        P1menu.downMenu();        
-      } 
-      else if (FlxG.keys.justPressed("D")) {
-        switch (P1menu.arrowPos) {
-          case 0:
-            if (P1.cash >= prices[0] + (15 * Math.pow(P1.signs, 2))) {
-              var newSign:Sign = new Sign(randomNumber(300, 1150), randomNumber(0, 720), true);				
-              signs.add(newSign);
-              fields.add(newSign);
-              add(newSign);
-              newSign.legendSprite = legend.purchasedSign(newSign.x, newSign.y, newSign.isBlue);
-              add(newSign.legendSprite);
-              P1.cash -= prices[0] + (15 * Math.pow(P1.signs, 2));
-              P1.signs++;
-            }
-            break;
-          case 1:
-            if (P1.cash >= prices[1]) {
-              P1.cash -= prices[1];
-              prices[1] *= 1.5;              
-              for (var i:int = 0; i < 4; i++) {
-                radios.members[i].purchase(true)
-              }
-            }
-            break;
-          case 2:
-            if (P1.cash >= prices[2]) {
-              myTV.purchase(true);
-              legend.purchased("tv", true);                            
-              P1.cash -= prices[2];
-              prices[2] *= 1.5;              
-            }
-            break;
-          case 3:
-            if (P1.cash >= prices[3]) {
-              P1.cash -= prices[3];
-              prices[3] *= 1.5;              
-              mySpeech.purchase(true);
-              legend.purchased("speech", true);
-            }
-            break;  
-          default:
-            break;
-        }
-      } 
-      
-      if(FlxG.keys.justPressed("UP"))
-      {
-        trace(FlxG["players"]);
-        P2menu.upMenu();
-      }
-      else if(FlxG.keys.justPressed("DOWN"))
-      {
-        P2menu.downMenu();        
-      }
-      else if (FlxG.keys.justPressed("RIGHT")) {
-        switch (P2menu.arrowPos) {
-          case 0:
-            if (P2.cash >= (prices[0]+ (15 * Math.pow(P2.signs, 2)))) {
-              var newSign:Sign = new Sign(randomNumber(300, 1150), randomNumber(0, 720), false);
-              signs.add(newSign);
-              fields.add(newSign);
-              add(newSign);
-              newSign.legendSprite = legend.purchasedSign(newSign.x, newSign.y, newSign.isBlue);
-              add(newSign.legendSprite);              
-              P2.cash -= prices[0] + (15 * Math.pow(P2.signs, 2));
-              P2.signs++;
-            }
-            break;
-          case 1:
-            if (P2.cash >= prices[1]) {
-              P2.cash -= prices[1];
-              prices[1] *= 1.5;   
-              for (var i:int = 0; i < 4; i++) {
-                radios.members[i].purchase(false)
-              }
-            }
-            break;
-          case 2:
-            if (P2.cash >= prices[2]) {
-              myTV.purchase(false);
-              legend.purchased("tv", false);              
-              P2.cash -= prices[2];
-              prices[2] *= 1.5;   
-            }
-            break;
-          case 3:
-            if (P2.cash >= prices[3]) {
-              P2.cash -= prices[3];
-              prices[3] *= 1.5;  
-              mySpeech.purchase(false); 
-              legend.purchased("speech", false);
-              
-            }
-            break;             
-          default:
-            break;
-        }
-      }
-      
-      
+      FlxG.collide(P1Runner, buildings);
+      FlxG.collide(P2Runner, buildings);
 
       
+      // Player 1 Purchases
+      // Sign
+      if (FlxG.keys.justPressed("ONE")) {
+        if (P1.cash >= prices[0] + (15 * Math.pow(P1.signs, 2))) {
+          var newSign:Sign = new Sign(P1Runner.x, P1Runner.y, true);				
+          signs.add(newSign);
+          fields.add(newSign);
+          add(newSign);
+          newSign.legendSprite = legend.purchasedSign(newSign.x, newSign.y, newSign.isBlue);
+          add(newSign.legendSprite);
+          P1.cash -= prices[0] + (15 * Math.pow(P1.signs, 2));
+          P1.signs++;
+        }
+      }
+      // Radio
+      else if (FlxG.keys.justPressed("TWO")) {
+        if (P1.cash >= prices[1]) {
+          P1.cash -= prices[1];
+          prices[1] *= 1.5;              
+          for (var i:int = 0; i < 4; i++) {
+            radios.members[i].purchase(true)
+          }
+        }
+      }
+      // TV
+      else if (FlxG.keys.justPressed("THREE")) {
+        if (P1.cash >= prices[2]) {
+          myTV.purchase(true);
+          legend.purchased("tv", true);                            
+          P1.cash -= prices[2];
+          prices[2] *= 1.5;              
+        }
+      }
+      // Speech
+      else if (FlxG.keys.justPressed("FOUR")) {
+        if (P1.cash >= prices[3]) {
+          P1.cash -= prices[3];
+          prices[3] *= 1.5;              
+          mySpeech.purchase(true);
+          legend.purchased("speech", true);
+        }
+      } 
+      // Player 2 Purchases
+       // Sign
+      if (FlxG.keys.justPressed("SEVEN")) {
+        if (P2.cash >= prices[0] + (15 * Math.pow(P2.signs, 2))) {
+          var newSign:Sign = new Sign(P2Runner.x, P2Runner.y, false);				
+          signs.add(newSign);
+          fields.add(newSign);
+          add(newSign);
+          newSign.legendSprite = legend.purchasedSign(newSign.x, newSign.y, newSign.isBlue);
+          add(newSign.legendSprite);
+          P2.cash -= prices[0] + (15 * Math.pow(P2.signs, 2));
+          P2.signs++;
+        }
+      }
+      // Radio
+      else if (FlxG.keys.justPressed("EIGHT")) {
+        if (P2.cash >= prices[1]) {
+          P2.cash -= prices[1];
+          prices[1] *= 1.5;              
+          for (var i:int = 0; i < 4; i++) {
+            radios.members[i].purchase(false)
+          }
+        }
+      }
+      // TV
+      else if (FlxG.keys.justPressed("NINE")) {
+        if (P2.cash >= prices[2]) {
+          myTV.purchase(false);
+          legend.purchased("tv", false);                            
+          P2.cash -= prices[2];
+          prices[2] *= 1.5;              
+        }
+      }
+      // Speech
+      else if (FlxG.keys.justPressed("ZERO")) {
+        if (P2.cash >= prices[3]) {
+          P2.cash -= prices[3];
+          prices[3] *= 1.5;              
+          mySpeech.purchase(false);
+          legend.purchased("speech", false);
+        }
+      }      
+      
+      // Move to next day
       currDayInt = Math.floor((FlxU.getTicks() - startTime) / 4000);
-      if (currDayInt <= 1) {
+      if (currDayInt <= 60) {
         // spawn random events
         if (currDayInt == 25 || currDayInt == 40 || currDayInt == 55) {
     //    if (currDayInt == 7 || currDayInt == 3 || currDayInt == 5){ // testing
