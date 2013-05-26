@@ -51,6 +51,8 @@ package
     public var currDayInt:uint;
     // tracks start of game
     public var startTime:uint;
+    // spaces events out evenly
+    private var lastEventDay:uint;
     // bottom bar
     public var progressBar:FlxSprite;
     // used to fade on gameover
@@ -192,7 +194,7 @@ package
       add(currDay);
       
       endgameFade = new FlxSprite(270, 0);
-
+      lastEventDay = 0;
 		}
 
     // equivalent to draw() function in processing
@@ -310,15 +312,16 @@ package
       if (currDayInt <= 60) {
         // spawn random events
         if (currDayInt == 25 || currDayInt == 40 || currDayInt == 55) {
-    //    if (currDayInt == 7 || currDayInt == 3 || currDayInt == 5){ // testing
+     //   if (currDayInt == 7 || currDayInt == 3 || currDayInt == 5){ // testing
           var chance:Number = Math.random();
-          if (chance <= 0.005) {
+          if (chance <= 0.005 && lastEventDay != currDayInt) {
             var plyChance:Number = Math.random();
             var evtType:uint = randomNumber(0, 3);
             var evtUsr:User = (plyChance < 0.5) ? P1 : P2;  
             var affectP1:Boolean = (plyChance < 0.5) ? true : false;
             var newEvt:GameEvent = new GameEvent(evtType, evtUsr);
             var changeTotal:uint;
+            lastEventDay = currDayInt;
             add(newEvt);
             switch (evtType) {
               case 0:

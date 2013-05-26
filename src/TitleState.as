@@ -210,7 +210,7 @@ package
 			if (FlxG.mouse.justPressed())
 			{
 				FlxG.mouse.hide();
-				FlxG.switchState(new InstructionState());
+				FlxG.switchState(new PlayState());
 			}
 			super.update();
 		}
