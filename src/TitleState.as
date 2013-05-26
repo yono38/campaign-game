@@ -11,6 +11,8 @@ package
 		private var click:FlxText;
     
     [Embed(source = '../gfx/political_pixel_title.png')] private var titlePic:Class;
+    [Embed(source = '../gfx/WASD.png')] private var WASD:Class;
+    [Embed(source = '../gfx/ArrowKeys.png')] private var ArrowKeys:Class;
     
     [Embed(source = '../gfx/chars/obamaHead.png')] private var obamaHeadPic:Class;    
     [Embed(source = '../gfx/chars/clintonHead.png')] private var clintonHeadPic:Class;    
@@ -58,22 +60,42 @@ package
 			title = new FlxText(20, 20, FlxG.width - 40, "The Campaign");
       title.color = txtColor;
 			title.alignment = "center";
-			title.size = 40;
+			title.size = 50;
       
       subtitle = new FlxText(20, FlxG.height - 100, FlxG.width - 40, "You have 60 days to win");
 			subtitle.color = txtColor;
       subtitle.alignment = "center";
 			subtitle.size = 32;
 
-			p1 = new FlxText(20, 500, FlxG.width - 40, "Player 1: UP/DOWN/RIGHT");
+			var controlsText:FlxText = new FlxText(20, 225, FlxG.width - 40, "Controls");
+			controlsText.color = txtColor;
+      controlsText.alignment = "center";
+			controlsText.size = 40;		      
+      add(controlsText);
+      
+			p1 = new FlxText(20, 300, FlxG.width - 40, "Player 1:                       ");
 			p1.color = txtColor;
       p1.alignment = "center";
 			p1.size = 35;			
       
-			p2 = new FlxText(20, 560, FlxG.width - 40, "Player 2: W/S/D");
+      var p1ctrl:FlxSprite = new FlxSprite(FlxG.width/2, 300);
+      p1ctrl.loadGraphic(WASD);
+      add(p1ctrl);
+      
+			p2 = new FlxText(20, 400, FlxG.width - 40, "Player 2:                       ");
 			p2.color = txtColor;
       p2.alignment = "center";
 			p2.size = 35;		
+
+      var p2ctrl:FlxSprite = new FlxSprite(FlxG.width/2, 400);
+      p2ctrl.loadGraphic(ArrowKeys);
+      add(p2ctrl); 
+      
+      var numctrl:FlxText = new FlxText(FlxG.width/2-250, FlxG.height - 250, 500, "Use the number keys to purchase items");
+      numctrl.alignment = "center";
+      numctrl.color = txtColor;
+      numctrl.size = 35;
+      add(numctrl);
       
 			click = new FlxText(20, FlxG.height - 50, FlxG.width - 40, "Click to Continue");
 			click.color = txtColor;
