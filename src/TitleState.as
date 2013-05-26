@@ -49,6 +49,8 @@ package
 		{
 			var txtColor:uint = 0xFF000000;
       
+      
+      // Center Area 
       var titleImg:FlxSprite = new FlxSprite(0, 0);
       titleImg.alpha = 0.35;
       titleImg.loadGraphic(titlePic);
@@ -78,6 +80,7 @@ package
 			click.color = txtColor;
       click.alignment = "center";
 			click.size = 25;
+      // End Center Area
       
       // Character menus
       
@@ -93,6 +96,7 @@ package
       repHeadBgs = [repBg1, repBg2, repBg3];
       var i:uint;
       for (i = 0; i < 3; i++) {
+        // sets up menu choices
         repHeadBgs[i] = new FlxSprite(FlxG.width - 177, 80 + i * 200 );
         repHeadBgs[i].makeGraphic(127, 127, 0xffbbbbbb);
         var repHeadPic:FlxSprite = new FlxSprite(FlxG.width - 177, 80 + i * 200 );
@@ -100,11 +104,9 @@ package
         add(repHeadBgs[i]);
         add(repHeadPic);
       }
+      // holds full body image
       repChar = new FlxSprite(1075, 80);
       add(repChar);
-      repState = 0;
-      setRepState();
-      
       
       // Democrat
       demName = new FlxText(200, 40, 200, "");
@@ -126,11 +128,23 @@ package
       }
       demChar = new FlxSprite(200, 80);
       add(demChar);
-      demState = 0;
-      setDemState();
-
       
-      FlxG["players"] = [0,0];
+      // keep old players if already set
+      if (FlxG["players"] != null) {
+        demState = FlxG["players"][0];
+        repState = FlxG["players"][1];
+      }
+      else { // set to default players
+        // [dem, rep]
+        trace("FlxG['players'] is null");
+        FlxG["players"] = [0, 0];
+        demState = 0;
+        repState = 0;      
+      }
+      // does the real work for setting up the selection menus
+      // based on demState/repState variables
+      setDemState();
+      setRepState();
 
 			add(title);
       add(subtitle);

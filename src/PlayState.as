@@ -161,7 +161,8 @@ package
       // these hold user attributes
       P1 = new User(FlxG["players"][0], 200, false);
       P2 = new User(FlxG["players"][1], 200, true);
-      
+      trace("Players in Playstate");
+      trace(FlxG["players"]);
       // this is basic HUD
       P1menu = new Menu(P1, true, prices);
       add(P1menu);
@@ -311,7 +312,7 @@ package
 
       
       currDayInt = Math.floor((FlxU.getTicks() - startTime) / 4000);
-      if (currDayInt <= 60) {
+      if (currDayInt <= 1) {
         // spawn random events
         if (currDayInt == 25 || currDayInt == 40 || currDayInt == 55) {
     //    if (currDayInt == 7 || currDayInt == 3 || currDayInt == 5){ // testing
@@ -377,11 +378,11 @@ package
         var gameOver:FlxText;
         var restartTxt:FlxText;
         if (P1.voters > P2.voters) {
-          gameOver = new FlxText(FlxG.width / 2 - 250, FlxG.height / 2 - 30, 500, P1.name+" Wins!");
+          gameOver = new FlxText(FlxG.width / 2 - 250, FlxG.height / 2 - 30, 700, P1.name+" Wins!");
           gameOver.color = 0xff0000ff;
         }
         else {
-          gameOver = new FlxText(FlxG.width / 2 - 250, FlxG.height / 2 - 30, 500, P2.name+" Wins!");
+          gameOver = new FlxText(FlxG.width / 2 - 250, FlxG.height / 2 - 30, 700, P2.name+" Wins!");
           gameOver.color = 0xffff0000;
         }
         var restartTxt:FlxText = new FlxText(FlxG.width / 2 - 250, FlxG.height / 2 + 30, 500, "Click to Play Again");

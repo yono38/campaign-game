@@ -26,7 +26,7 @@ package Entities
     
     public function User(char:uint, startCash:uint, colorBlue:Boolean) 
     {
-      names = [["Barack Obama", "Bill Clinton"], ["Ronald Reagan", "The Governator", "George Dubya Bush"]];
+      names = [["Barack Obama", "Bill Clinton"], ["Ronald Reagan", "The Governator", "George Dubya"]];
       heads = [[obamaHeadPic, clintonHeadPic], [reaganHeadPic, schwartzeneggerHeadPic, dubyaHeadPic]];
       cash = startCash;
       isBlue = colorBlue;
