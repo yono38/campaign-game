@@ -17,7 +17,7 @@ package
 	{
 
     
-    [Embed(source = '../gfx/townMap_leftLegend.png')] private var town:Class; 
+    [Embed(source = '../gfx/townMap_leftLegend_new.png')] private var town:Class; 
     
     
  //   [Embed(source = '../gfx/LeftWalkingMass.png')] private var path7:Class;
@@ -87,6 +87,7 @@ package
       makeBlock(708, 229, 410, 134);
       makeBlock(616, 400, 320, 133);
       makeBlock(386, 560, 293, 109);
+      makeBlock(774, 562, 137, 71);
       makeBlock(465, 448, 43, 44);
       makeBlock(569, 674, 520, 100);      
       
@@ -102,7 +103,7 @@ package
       makeBlock(1158, 24, 342, 378);
       makeBlock(964, 400, 534, 132);
       makeBlock(1096, 536, 412, 36);
-      makeBlock(760, 558, 742, 90);
+      makeBlock(974, 558, 742, 90);
       makeBlock(1114, 652, 390, 112); 
       makeBlock(748,746, 754, 50);      
 
@@ -319,9 +320,21 @@ package
      //   if (currDayInt == 7 || currDayInt == 3 || currDayInt == 5){ // testing
           var chance:Number = Math.random();
           if (chance <= 0.005 && lastEventDay != currDayInt) {
-            var plyChance:Number = Math.random();
+            // choose event type
             var evtType:uint = randomNumber(0, 3);
-            var evtUsr:User = (plyChance < 0.5) ? P1 : P2;  
+            // choose affected player
+            var evtUsr:User;
+            var plyChance:Number = Math.random();
+            // try to give bad outcomes to player in the lead
+            if (P1.voters > P2.voters * 1.25 && evtType != 3) {
+              evtUsr = (plyChance < 0.75) ? P1 : P2;
+            }
+            else if (P2.voters > P1.voters * 1.25 && evtType != 3) {
+              evtUsr = (plyChance < 0.75) ? P2 : P1;              
+            }
+            else {
+              evtUsr = (plyChance < 0.5) ? P1 : P2; 
+            }
             var affectP1:Boolean = (plyChance < 0.5) ? true : false;
             var newEvt:GameEvent = new GameEvent(evtType, evtUsr);
             var changeTotal:uint;
