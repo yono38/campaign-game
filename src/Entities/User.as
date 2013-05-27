@@ -28,8 +28,8 @@ package Entities
     
     public function User(char:uint, startCash:uint, colorBlue:Boolean) 
     {
-      names = [["Barack Obama", "Bill Clinton", "John F. Kennedy"], ["Ronald Reagan", "The Governator", "George Dubya"]];
-      heads = [[obamaHeadPic, clintonHeadPic, jfkHeadPic], [reaganHeadPic, schwartzeneggerHeadPic, dubyaHeadPic]];
+      names = [["Barack Obama", "Bill Clinton", "John F. Kennedy"], ["Ronald Reagan", "George Dubya", "The Governator"]];
+      heads = [[obamaHeadPic, clintonHeadPic, jfkHeadPic], [reaganHeadPic, dubyaHeadPic, schwartzeneggerHeadPic]];
       cash = startCash;
       isBlue = colorBlue;
       power = 0;

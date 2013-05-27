@@ -15,11 +15,13 @@ package Entities
 		public var cashText:FlxText;
 		public var signText:FlxText;
 		public var radioText:FlxText;
+    public var radioOwned:FlxText;
 		public var speechText:FlxText;
+    public var speechOwned:FlxText;
 		public var tvText:FlxText;
+    public var tvOwned:FlxText;
     public var voterText:FlxText;
 		
-		public var itemArray:Array;
 		public var color:uint;
 		public var usr:User;
 		public var x:uint;
@@ -104,19 +106,31 @@ package Entities
 			radioText.size = 21;
 			radioText.color = color;
 			add(radioText);
-			
+
+			radioOwned = new FlxText(x + 30, 325, 300, "");
+			radioOwned.size = 21;
+			radioOwned.color = 0xff000000;
+			add(radioOwned);
+      
 			tvText = new FlxText(x + 30, 360, 500, keys[2]+") TV: $2000");
 			tvText.size = 21;
 			tvText.color = color;
 			add(tvText);
+
+			tvOwned = new FlxText(x + 30, 385, 300, "");
+			tvOwned.size = 21;
+			tvOwned.color = 0xff000000;
+			add(tvOwned);      
 			
 			speechText = new FlxText(x + 30, 420, 300, keys[3]+ ") Speech: $5000");
 			speechText.size = 21;
 			speechText.color = color;
 			add(speechText);
-			
-			itemArray = new Array(signText, radioText, tvText, speechText);
       
+			speechOwned = new FlxText(x + 30, 445, 300, "");
+			speechOwned.size = 21;
+			speechOwned.color = 0xff000000;
+			add(speechOwned);            
 		
 		}
 		
@@ -157,27 +171,5 @@ package Entities
 		
 		}
 		
-    /*
-    // Deprecated 
-		public function upMenu():void
-		{
-			if (arrowPos != 0)
-			{
-				itemArray[arrowPos].text = (itemArray[arrowPos].text).substr(2);
-				arrowPos--;
-				itemArray[arrowPos].text = "> " + itemArray[arrowPos].text;
-			}
-		}
-		
-		public function downMenu():void
-		{
-			if (arrowPos != 3)
-			{
-				itemArray[arrowPos].text = (itemArray[arrowPos].text).substr(2);
-				arrowPos++;
-				itemArray[arrowPos].text = "> " + itemArray[arrowPos].text;
-			}
-		}
-    */
 	}
 }

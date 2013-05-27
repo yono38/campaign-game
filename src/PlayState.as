@@ -148,9 +148,6 @@ package
       fields.add(mySpeech.field);
      
       add(mySpeech);
-    //  myTV.purchase(true);
-    //  add(fields);
-
       
       // set up pedestrians
       peds = new FlxGroup();
@@ -159,7 +156,6 @@ package
         peds.add(nPed);
       }
       add(peds);
-      // reset ped position if over building
       
       // used for storing convos
       convos = new FlxGroup();
@@ -205,8 +201,6 @@ package
       
       // respawn peds if they start in a building
       FlxG.overlap(peds, buildings, respawn);
-      FlxG.overlap(signs, buildings, respawnSign);
-
 
       // makes influence fields work
       FlxG.overlap(peds, fields, underTheInfluence);
@@ -217,7 +211,6 @@ package
       FlxG.collide(P1Runner, buildings);
       FlxG.collide(P2Runner, buildings);
 
-      
       // Player 1 Purchases
       // Sign
       if (FlxG.keys.justPressed("ONE")) {
@@ -241,7 +234,9 @@ package
             radios.members[i].purchase(true)
           }
           legend.purchased("radio", true);                            
-
+          P1menu.radioOwned.text = "Owned";
+          P2menu.radioOwned.text = "";
+          
         }
       }
       // TV
@@ -250,7 +245,9 @@ package
           myTV.purchase(true);
           legend.purchased("tv", true);                            
           P1.cash -= prices[2];
-          prices[2] *= 1.5;              
+          prices[2] *= 1.5;  
+          P1menu.tvOwned.text = "Owned";
+          P2menu.tvOwned.text = "";          
         }
       }
       // Speech
@@ -260,6 +257,8 @@ package
           prices[3] *= 1.5;              
           mySpeech.purchase(true);
           legend.purchased("speech", true);
+          P1menu.speechOwned.text = "Owned";
+          P2menu.speechOwned.text = "";          
         }
       } 
       // Player 2 Purchases
@@ -285,7 +284,8 @@ package
             radios.members[i].purchase(false);
           }
           legend.purchased("radio", false);                            
-          
+          P2menu.radioOwned.text = "Owned";
+          P1menu.radioOwned.text = "";          
         }
       }
       // TV
@@ -294,7 +294,9 @@ package
           myTV.purchase(false);
           legend.purchased("tv", false);                            
           P2.cash -= prices[2];
-          prices[2] *= 1.5;              
+          prices[2] *= 1.5;  
+          P2menu.tvOwned.text = "Owned";
+          P1menu.tvOwned.text = "";            
         }
       }
       // Speech
@@ -304,12 +306,14 @@ package
           prices[3] *= 1.5;              
           mySpeech.purchase(false);
           legend.purchased("speech", false);
+          P2menu.speechOwned.text = "Owned";
+          P1menu.speechOwned.text = "";            
         }
       }      
       
       // Move to next day
       currDayInt = Math.floor((FlxU.getTicks() - startTime) / 4000);
-      if (currDayInt <= 3) {
+      if (currDayInt <= 60) {
         // spawn random events
         if (currDayInt%13 == 0) {
      //   if (currDayInt == 7 || currDayInt == 3 || currDayInt == 5){ // testing

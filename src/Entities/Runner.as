@@ -22,7 +22,7 @@ package Entities
     private var user:User;
     public function Runner(xpos:uint, ypos:uint, plyr:User) 
     {
-      heads = [[obamaHeadPic, clintonHeadPic, jfkHeadPic], [reaganHeadPic, schwartzeneggerHeadPic, dubyaHeadPic]];
+      heads = [[obamaHeadPic, clintonHeadPic, jfkHeadPic], [reaganHeadPic, dubyaHeadPic, schwartzeneggerHeadPic]];
       if (plyr.isBlue) {
         loadGraphic(heads[0][plyr.myChar]);
       }

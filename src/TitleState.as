@@ -128,9 +128,9 @@ package
       repName.size = 25;
       add(repName);
 
-      repNameList = ["Reagan", "Governator", "Dubya"];
-      repBodies = [reaganBody, schwartzeneggerBody, dubyaBody];
-      var repHeads:Array = [reaganHeadPic, schwartzeneggerHeadPic, dubyaHeadPic];
+      repNameList = ["Reagan", "Dubya", "Governator"];
+      repBodies = [reaganBody, dubyaBody, schwartzeneggerBody];
+      var repHeads:Array = [reaganHeadPic, dubyaHeadPic, schwartzeneggerHeadPic];
       repHeadBgs = [repBg1, repBg2, repBg3];
       var i:uint;
       repTotal = (FlxG["repUnlocked"]) ? 3 : 2;
