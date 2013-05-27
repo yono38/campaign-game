@@ -15,14 +15,9 @@ package
 	
 	public class PlayState extends FlxState
 	{
-
     
     [Embed(source = '../gfx/townMap_leftLegend_new.png')] private var town:Class; 
     
-    
- //   [Embed(source = '../gfx/LeftWalkingMass.png')] private var path7:Class;
- //   [Embed(source = '../gfx/RightWalkingMass.png')] private var path8:Class;
-
 		public var peds:FlxGroup;
     // buildings == anything that's not the pedestrian path
     private var buildings:FlxGroup;
@@ -58,8 +53,6 @@ package
     // used to fade on gameover
     public var endgameFade:FlxSprite;
     private var gameOverTime:Boolean;
-    
-
     
     private function randomNumber(low:Number=0, high:Number=1):Number {
       return Math.floor(Math.random() * (1+high-low)) + low;
@@ -408,7 +401,7 @@ package
           gameOver = new FlxText(FlxG.width / 2 - 250, FlxG.height / 2 - 30, 700, P2.name+" Wins!");
           gameOver.color = 0xffff0000;
           if (FlxG["repUnlocked"] == false) {
-            newCharTxt = new FlxText(FlxG.width / 2 - 250, FlxG.height / 2 + 30, 500, "New Character Unlocked: Dubya");
+            newCharTxt = new FlxText(FlxG.width / 2 - 250, FlxG.height / 2 + 30, 500, "New Character Unlocked: The Governator");
             newCharTxt.color = 0xffff0000;
             newCharTxt.size = 30;
             add(newCharTxt);
