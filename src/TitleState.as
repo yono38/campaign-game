@@ -1,6 +1,7 @@
 package
 {
 	import org.flixel.*;
+  import org.flixel.plugin.photonstorm.FlxButtonPlus;
 	
 	public class TitleState extends FlxState
 	{
@@ -9,6 +10,8 @@ package
     private var p1:FlxText;
     private var p2:FlxText;
 		private var click:FlxText;
+    private var creditsBtn:FlxButtonPlus;
+    private var startBtn:FlxButtonPlus;
     
     [Embed(source = '../gfx/political_pixel_title.png')] private var titlePic:Class;
 
@@ -119,10 +122,6 @@ package
       numctrl.size = 25;
       add(numctrl);
       
-			click = new FlxText(20, FlxG.height - 50, FlxG.width - 40, "Click to Continue");
-			click.color = txtColor;
-      click.alignment = "center";
-			click.size = 25;
       // End Center Area
       
       // Character menus
@@ -207,7 +206,17 @@ package
       // based on demState/repState variables
       setDemState();
       setRepState();
+      
+      creditsBtn = new FlxButtonPlus(FlxG.width / 2 - 220, FlxG.height - 50, creditsPage, null, "Credits", 200, 40);
+      creditsBtn.textNormal.size *= 2;
+      creditsBtn.textHighlight.size *= 2;
+      add(creditsBtn);
 
+      startBtn = new FlxButtonPlus(FlxG.width / 2 + 20, FlxG.height - 50, startGame, null, "Start", 200, 40);
+      startBtn.textNormal.size *= 2;
+      startBtn.textHighlight.size *= 2;
+      add(startBtn);      
+      
 			add(title);
       add(subtitle);
       add(p1);
@@ -248,13 +257,26 @@ package
         setDemState();
       }
       
+      /*
 			if (FlxG.mouse.justPressed())
 			{
 				FlxG.mouse.hide();
 				FlxG.switchState(new PlayState());
 			}
+      */
+      
 			super.update();
 		}
+    
+    // begins the game!
+    protected function startGame():void {
+      FlxG.mouse.hide();
+      FlxG.switchState(new PlayState());
+    }
+    
+    protected function creditsPage():void {
+      FlxG.switchState(new CreditState());
+    }
     
     protected function setRepState():void {
       var i:uint;
@@ -287,9 +309,9 @@ package
       btmleft.makeGraphic(43, 43, 0xff000000);
       myKeys.add(btmleft);
       var btmctr:FlxSprite = new FlxSprite(785, 352+ypos);
-      btmctr.makeGraphic(43, 43, 0xff000000);
+      btmctr.makeGraphic(50, 43, 0xff000000);
       myKeys.add(btmctr);
-      var btmrght:FlxSprite = new FlxSprite(830, 352+ypos);
+      var btmrght:FlxSprite = new FlxSprite(837, 352+ypos);
       btmrght.makeGraphic(43, 43, 0xff000000);
       myKeys.add(btmrght); 
       return myKeys;
@@ -309,7 +331,7 @@ package
       Skey.color = 0xffffffff;
       Skey.size = 35;
       WASDtxt.add(Skey); 
-      var Dkey:FlxText = new FlxText(835, 278, 50, "D");
+      var Dkey:FlxText = new FlxText(845, 278, 50, "D");
       Dkey.color = 0xffffffff;
       Dkey.size = 35;
       WASDtxt.add(Dkey);      
@@ -318,19 +340,21 @@ package
     
     protected function addArrowText():FlxGroup {
       var Arrowtxt:FlxGroup = new FlxGroup();
-      var Upkey:FlxText = new FlxText(795, 325, 50, "^");
+      var Upkey:FlxText = new FlxText(765, 340, 50, ">");
+      Upkey.angle = 270;
       Upkey.color = 0xffffffff;
-      Upkey.size = 65;
+      Upkey.size = 35;
       Arrowtxt.add(Upkey);
       var Leftkey:FlxText = new FlxText(745, 378, 50, "<");
       Leftkey.color = 0xffffffff;
       Leftkey.size = 35;
       Arrowtxt.add(Leftkey);
-      var Downkey:FlxText = new FlxText(790, 378, 50, "V");
+      var Downkey:FlxText = new FlxText(805, 415, 50, ">");
+      Downkey.angle = 90;
       Downkey.color = 0xffffffff;
       Downkey.size = 35;
       Arrowtxt.add(Downkey); 
-      var Rightkey:FlxText = new FlxText(835, 378, 50, ">");
+      var Rightkey:FlxText = new FlxText(845, 378, 50, ">");
       Rightkey.color = 0xffffffff;
       Rightkey.size = 35;
       Arrowtxt.add(Rightkey);      
