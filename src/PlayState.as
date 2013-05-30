@@ -170,7 +170,7 @@ package
       P1Runner = new Runner(655, 200, P1);
       add(P1Runner);
       P2Runner = new Runner(680, 185, P2);
-      add(P2Runner);      
+      add(P2Runner);  
       
       progressBar = new FlxSprite(735, 735); // range from 335 to 1135      
       progressBar.makeGraphic(20, 50, 0xff000000);
@@ -179,8 +179,12 @@ package
       legend = new Legend();
       add(legend);
       
-      currDay = new FlxText(20, FlxG.height - 250, 400, "Curr Time: " + FlxU.formatTicks(startTime, FlxU.getTicks()));
-      currDay.size = 20;
+      var dayBkgrd:FlxSprite = new FlxSprite(675, 675);
+      dayBkgrd.makeGraphic(150, 50, 0xffbbbbbb);
+      add(dayBkgrd);      
+      
+      currDay = new FlxText(690, 680, 400, "Day " + FlxU.formatTicks(startTime, FlxU.getTicks()));
+      currDay.size = 30;
       currDay.color = 0xff000000;
       add(currDay);
       
@@ -387,7 +391,7 @@ package
         // 900 movement - 400 each direction
         // voters range from -200 to 200 
         progressBar.x = ((P2.voters - P1.voters) * 2) + 735;
-        currDay.text = "Day: " + currDayInt;
+        currDay.text = "Day " + currDayInt;
         super.update();
       }
       else if (!gameOverTime) { // set up gameover screen        
