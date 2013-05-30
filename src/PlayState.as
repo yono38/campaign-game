@@ -14,7 +14,7 @@ package
 	public class PlayState extends FlxState
 	{
     
-    [Embed(source = '../gfx/townMap_leftLegend_new.png')] private var town:Class; 
+    [Embed(source = '../gfx/townMap_new.png')] private var town:Class; 
     
 		public var peds:FlxGroup;
     // buildings == anything that's not the pedestrian path
@@ -38,6 +38,13 @@ package
     // static items
     public var myTV:TV;
     public var mySpeech:Speech;
+    // purchase areas
+    public var buyRadioTxt:FlxText;
+    public var radioBuyArea:FlxSprite;
+    public var buyTvTxt:FlxText;
+    public var tvBuyArea:FlxSprite;
+    public var buySpeechTxt:FlxText;
+    public var speechBuyArea:FlxSprite;    
     // lists day on screen
     public var currDay:FlxText;
     // keeps track of current game day
@@ -64,8 +71,8 @@ package
       //Set the background color to light gray (0xAARRGGBB)
 			FlxG.bgColor = 0xffaaaaaa;
       var i:int;
-      prices = [5, 1000, 2000, 5000];
-//      prices = [5, 10, 20, 50]; // test
+ //     prices = [5, 1000, 2000, 5000];
+      prices = [5, 10, 20, 50]; // test
       startTime = FlxU.getTicks();
       currDayInt = 0;
       gameOverTime = false;
@@ -89,8 +96,8 @@ package
       makeBlock(0, 0, 1500, 21);
       makeBlock(0, 23, 315, 189);
       makeBlock(0, 209, 660, 154);
-      makeBlock(0, 365, 581, 48);
-      makeBlock(0, 409, 354, 329);
+      makeBlock(0, 365, 581, 43);
+      makeBlock(0, 409, 350, 329);
       makeBlock(0, 735, 743, 53);
       
       // right side
@@ -132,17 +139,43 @@ package
       fields.add(myRadio4.field);  
       radios.add(myRadio4);      
       
+      radioBuyArea = new FlxSprite(1135, 350);
+      radioBuyArea.makeGraphic(30, 30, 0x77333333);
+      add(radioBuyArea);
+      
+      buyRadioTxt = new FlxText(1160, 380, 400, "");
+      buyRadioTxt.color = 0xffffff00;
+      buyRadioTxt.size = 20;
+      add(buyRadioTxt);
+      
      // Set up TV
       myTV = new TV(309, 614);
       fields.add(myTV.field);
       add(myTV.field);
       add(myTV.tvSprite);
+
+      tvBuyArea = new FlxSprite(350, 620);
+      tvBuyArea.makeGraphic(30, 30, 0x77333333);
+      add(tvBuyArea);
+      
+      buyTvTxt = new FlxText(280, 575, 400, "");
+      buyTvTxt.color = 0xffffff00;
+      buyTvTxt.size = 20;
+      add(buyTvTxt);
       
       // Set up Speech
       mySpeech = new Speech(350, 350);
-      fields.add(mySpeech.field);
-     
+      fields.add(mySpeech.field);     
       add(mySpeech);
+      
+      speechBuyArea = new FlxSprite(345, 405);
+      speechBuyArea.makeGraphic(30, 30, 0x77333333);
+      add(speechBuyArea);
+      
+      buySpeechTxt = new FlxText(340, 380, 400, "");
+      buySpeechTxt.color = 0xffffff00;
+      buySpeechTxt.size = 20;
+      add(buySpeechTxt);
       
       // set up pedestrians
       peds = new FlxGroup();
@@ -236,44 +269,17 @@ package
         }
       }
       // Radio
-      else if (FlxG.keys.justPressed("TWO")) {
-        if (P1.cash >= prices[1]) {
-          P1.cash -= prices[1];
-          prices[1] *= 1.5;              
-          for (var i:int = 0; i < 4; i++) {
-            radios.members[i].purchase(true)
-          }
-          legend.purchased("radio", true);  
-          P1menu.buyFlash('radio');
-          P1menu.radioOwned.text = "Owned";
-          P2menu.radioOwned.text = "";
-          
-        }
-      }
+      buyRadioTxt.text = "";
+      FlxG.overlap(P1Runner, radioBuyArea, buyRadio);
+
       // TV
-      else if (FlxG.keys.justPressed("THREE")) {
-        if (P1.cash >= prices[2]) {
-          myTV.purchase(true);
-          legend.purchased("tv", true);   
-          P1menu.buyFlash('tv');
-          P1.cash -= prices[2];
-          prices[2] *= 1.5;  
-          P1menu.tvOwned.text = "Owned";
-          P2menu.tvOwned.text = "";          
-        }
-      }
+      buyTvTxt.text = "";
+      FlxG.overlap(P1Runner, tvBuyArea, buyTv);
+      
       // Speech
-      else if (FlxG.keys.justPressed("FOUR")) {
-        if (P1.cash >= prices[3]) {
-          P1.cash -= prices[3];
-          prices[3] *= 1.5;              
-          mySpeech.purchase(true);
-          legend.purchased("speech", true);
-          P1menu.buyFlash('speech');
-          P1menu.speechOwned.text = "Owned";
-          P2menu.speechOwned.text = "";          
-        }
-      } 
+      buySpeechTxt.text = "";
+      FlxG.overlap(P1Runner, speechBuyArea, buySpeech);
+      
       // Player 2 Purchases
        // Sign
       if (FlxG.keys.justPressed("SEVEN")) {
@@ -290,45 +296,14 @@ package
         }
       }
       // Radio
-      else if (FlxG.keys.justPressed("EIGHT")) {
-        if (P2.cash >= prices[1]) {
-          P2.cash -= prices[1];
-          prices[1] *= 1.5;              
-          for (var i:int = 0; i < 4; i++) {
-            radios.members[i].purchase(false);
-          }
-          legend.purchased("radio", false);                            
-          P2menu.buyFlash('radio');
-          P2menu.radioOwned.text = "Owned";
-          P1menu.radioOwned.text = "";          
-        }
-      }
-      // TV
-      else if (FlxG.keys.justPressed("NINE")) {
-        if (P2.cash >= prices[2]) {
-          myTV.purchase(false);
-          legend.purchased("tv", false);                            
-          P2.cash -= prices[2];
-          prices[2] *= 1.5;  
-          P2menu.tvOwned.text = "Owned";
-          P1menu.tvOwned.text = "";   
-          P2menu.buyFlash('tv');
-
-        }
-      }
-      // Speech
-      else if (FlxG.keys.justPressed("ZERO")) {
-        if (P2.cash >= prices[3]) {
-          P2.cash -= prices[3];
-          prices[3] *= 1.5;              
-          mySpeech.purchase(false);
-          legend.purchased("speech", false);
-          P2menu.buyFlash('speech');
-          P2menu.speechOwned.text = "Owned";
-          P1menu.speechOwned.text = "";            
-        }
-      }      
+      FlxG.overlap(P2Runner, radioBuyArea, buyRadio);
       
+      // TV
+      FlxG.overlap(P2Runner, tvBuyArea, buyTv);
+
+      // Speech
+      FlxG.overlap(P2Runner, speechBuyArea, buySpeech);
+          
       // Move to next day
       currDayInt = Math.floor((FlxU.getTicks() - startTime) / 4000);
       if (currDayInt <= 60) {
@@ -615,9 +590,78 @@ package
       }
     }
     
-    public function flashText(myText:FlxText):void {
+    public function buyRadio(runner:Runner, area:FlxSprite):void {
+      buyRadioTxt.text = "Buy!";
+      if (runner.user.isBlue && FlxG.keys.justPressed("TWO") && P1.cash >= prices[1]) {
+        P1.cash -= prices[1];
+        prices[1] *= 1.5;              
+        for (var i:int = 0; i < 4; i++) {
+          radios.members[i].purchase(true)
+        }
+        legend.purchased("radio", true);  
+        P1menu.buyFlash('radio');
+        P1menu.radioOwned.text = "Owned";
+        P2menu.radioOwned.text = "";
+        
+      }
+      else if (!runner.user.isBlue && FlxG.keys.justPressed("EIGHT") && P2.cash >= prices[1]) {
+        P2.cash -= prices[1];
+        prices[1] *= 1.5;              
+        for (var i:int = 0; i < 4; i++) {
+          radios.members[i].purchase(false);
+        }
+        legend.purchased("radio", false);                            
+        P2menu.buyFlash('radio');
+        P2menu.radioOwned.text = "Owned";
+        P1menu.radioOwned.text = "";          
+      }
       
     }
+    
+    public function buyTv(runner:Runner, area:FlxSprite):void {
+      buyTvTxt.text = "Buy!";
+      if (runner.user.isBlue && FlxG.keys.justPressed("THREE") && P1.cash >= prices[2]) {
+          myTV.purchase(true);
+          legend.purchased("tv", true);   
+          P1menu.buyFlash('tv');
+          P1.cash -= prices[2];
+          prices[2] *= 1.5;  
+          P1menu.tvOwned.text = "Owned";
+          P2menu.tvOwned.text = "";          
+      }
+      else if (!runner.user.isBlue && FlxG.keys.justPressed("NINE") && P2.cash >= prices[2]) {
+        myTV.purchase(false);
+        legend.purchased("tv", false);                            
+        P2.cash -= prices[2];
+        prices[2] *= 1.5;  
+        P2menu.tvOwned.text = "Owned";
+        P1menu.tvOwned.text = "";   
+        P2menu.buyFlash('tv');
+      }
+    }
+
+    public function buySpeech(runner:Runner, area:FlxSprite):void {
+      buySpeechTxt.text = "Speech!";
+      if (runner.user.isBlue && FlxG.keys.justPressed("FOUR") && P1.cash >= prices[3]) {
+        P1.cash -= prices[3];
+        prices[3] *= 1.5;              
+        mySpeech.purchase(true);
+        legend.purchased("speech", true);
+        P1menu.buyFlash('speech');
+        P1menu.speechOwned.text = "Owned";
+        P2menu.speechOwned.text = "";   
+      }
+      else if (!runner.user.isBlue && FlxG.keys.justPressed("ZERO") && P2.cash >= prices[3]) {
+        P2.cash -= prices[3];
+        prices[3] *= 1.5;              
+        mySpeech.purchase(false);
+        legend.purchased("speech", false);
+        P2menu.buyFlash('speech');
+        P2menu.speechOwned.text = "Owned";
+        P1menu.speechOwned.text = "";            
+      }
+    }
+    
     
     public function changeDir(ped1:Pedestrian, build:FlxObject):void {
       ped1.changeDir();

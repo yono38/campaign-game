@@ -20,7 +20,7 @@ package Items
       y = ypos;
       super();
       
-      field = new InfluenceField(xpos, ypos, 250, true);
+      field = new InfluenceField(xpos, ypos, 210, true);
       field.exists = false;
       add(field);
       

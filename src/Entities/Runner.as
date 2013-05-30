@@ -19,7 +19,7 @@ package Entities
     private var heads:Array;
     private var xSpeed:Number;
     private var ySpeed:Number;
-    private var user:User;
+    public var user:User;
     public function Runner(xpos:uint, ypos:uint, plyr:User) 
     {
       heads = [[obamaHeadPic, clintonHeadPic, jfkHeadPic], [reaganHeadPic, dubyaHeadPic, schwartzeneggerHeadPic]];

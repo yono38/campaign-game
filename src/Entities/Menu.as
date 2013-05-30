@@ -98,37 +98,37 @@ package Entities
         keys = [7, 8, 9, 0];
       }
       
-			signText = new FlxText(x + 30, 240, 300, keys[0]+") Sign: $");
+			signText = new FlxText(x + 20, 240, 300, keys[0]+") Sign: $");
 			signText.size = 21;
 			signText.color = color;
 			add(signText);
 			
-			radioText = new FlxText(x + 30, 300, 300, keys[1]+") Radio: $1000");
+			radioText = new FlxText(x + 20, 300, 300, keys[1]+") Radio: $1000");
 			radioText.size = 21;
 			radioText.color = color;
 			add(radioText);
 
-			radioOwned = new FlxText(x + 30, 325, 300, "");
+			radioOwned = new FlxText(x + 20, 325, 300, "");
 			radioOwned.size = 21;
 			radioOwned.color = 0xff000000;
 			add(radioOwned);
       
-			tvText = new FlxText(x + 30, 360, 500, keys[2]+") TV: $2000");
-			tvText.size = 21;
+			tvText = new FlxText(x + 20, 360, 500, keys[2]+") Billboard: $2000");
+			tvText.size = 18;
 			tvText.color = color;
 			add(tvText);
 
-			tvOwned = new FlxText(x + 30, 385, 300, "");
+			tvOwned = new FlxText(x + 20, 385, 300, "");
 			tvOwned.size = 21;
 			tvOwned.color = 0xff000000;
 			add(tvOwned);      
 			
-			speechText = new FlxText(x + 30, 420, 300, keys[3]+ ") Speech: $5000");
+			speechText = new FlxText(x + 20, 420, 300, keys[3]+ ") Speech: $5000");
 			speechText.size = 21;
 			speechText.color = color;
 			add(speechText);
       
-			speechOwned = new FlxText(x + 30, 445, 300, "");
+			speechOwned = new FlxText(x + 20, 445, 300, "");
 			speechOwned.size = 21;
 			speechOwned.color = 0xff000000;
 			add(speechOwned);            
