@@ -31,6 +31,7 @@ package Entities
 		public var downKey:String;
 		public var selectKey:String;
     public var priceArr:Array;
+    private var flashingArr:Array;
 		
 		public function Menu(myusr:User, isLeft:Boolean, prices:Array)
 		{
@@ -131,7 +132,7 @@ package Entities
 			speechOwned.size = 21;
 			speechOwned.color = 0xff000000;
 			add(speechOwned);            
-		
+      flashingArr = [ false, false, false, false ];
 		}
 		
 		override public function update():void
@@ -141,35 +142,86 @@ package Entities
 			var txtarr:Array = (signText.text).split("$");
       var signPrice:Number = ((50 + 15 * Math.pow(usr.signs, 2)));
       signText.text = txtarr[0] + "$" + signPrice.toFixed(0);
-      if (usr.cash < signPrice) {
-        signText.color = 0xffbbbbbb;
+      if (!flashingArr[0]){
+        if (usr.cash < signPrice) {
+          signText.color = 0xffbbbbbb;
+        }
+        else { signText.color = color; }
       }
-      else { signText.color = color; }
       
 			txtarr = (radioText.text).split("$");
       radioText.text = txtarr[0] + "$" + (priceArr[1]).toFixed(0);
-      if (usr.cash < priceArr[1]) {
-        radioText.color = 0xffbbbbbb;        
+      if (!flashingArr[1]) {
+   //     trace("modifying radio color for "+headerText.text);
+        if (usr.cash < priceArr[1]) {
+          radioText.color = 0xffbbbbbb;        
+        }
+        else { radioText.color = color; }
       }
-      else { radioText.color = color; }
       
 			txtarr = (tvText.text).split("$");
       tvText.text = txtarr[0] + "$" + (priceArr[2]).toFixed(0);
-      if (usr.cash < priceArr[2]) {
-        tvText.color = 0xffbbbbbb;        
+      if (!flashingArr[2]){
+        if (usr.cash < priceArr[2]) {
+          tvText.color = 0xffbbbbbb;        
+        }
+        else { tvText.color = color; }
       }
-      else { tvText.color = color; }
       
       txtarr = (speechText.text).split("$");
       speechText.text = txtarr[0] + "$" + (priceArr[3]).toFixed(0);
-            if (usr.cash < priceArr[3]) {
-        speechText.color = 0xffbbbbbb;        
+      if (!flashingArr[3]){
+        if (usr.cash < priceArr[3]) {
+          speechText.color = 0xffbbbbbb;        
+        }
+        else { speechText.color = color; }
       }
-      else { speechText.color = color; }
-      
 			super.update();
 		
 		}
+    
+    public function buyFlash(itemName:String):void {
+      // chooses which text to affect
+      var flashText:FlxText;
+      var endFlashIdx:uint;
+      switch (itemName) {
+        case 'radio':
+          flashText = radioText;
+          endFlashIdx = 1;
+          break;
+        case 'tv':
+          flashText = tvText;
+          endFlashIdx = 2;
+          break;
+        case 'speech':
+          flashText = speechText;
+          endFlashIdx = 3;
+          break;
+        case 'sign':
+          flashText = signText;
+          endFlashIdx = 0;
+          break;
+        default:
+          return;
+      }
+      // sets up the timer
+      var flashTimer:FlxTimer = new FlxTimer();
+      var endFlashTimer:FlxTimer = new FlxTimer();
+      flashingArr[endFlashIdx] = true;
+      var i:uint = 1;
+      flashTimer.start(0.05, 12, function():void { toggleColor(flashText, i++); } );
+      endFlashTimer.start(0.7, 1, function():void { flashingArr[endFlashIdx] = false; } );
+    }
+     
+    private function toggleColor(flashText:FlxText, i:uint):void
+    {
+      if (i%2 == 0) {
+        flashText.color = color;
+      }
+      else {
+        flashText.color = 0xFFFFFF00;
+      }
+    }
 		
 	}
 }

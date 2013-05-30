@@ -9,9 +9,7 @@ package
   import Items.Sign;
   import Items.Speech;
   import Items.TV;
-	import org.flixel.*;
-  
-
+	import org.flixel.*;  
 	
 	public class PlayState extends FlxState
 	{
@@ -54,6 +52,9 @@ package
     public var endgameFade:FlxSprite;
     private var gameOverTime:Boolean;
     
+    public var dailyScreens:Array;
+    private var lastDayGrab:uint;
+    
     private function randomNumber(low:Number=0, high:Number=1):Number {
       return Math.floor(Math.random() * (1+high-low)) + low;
     }
@@ -64,7 +65,7 @@ package
 			FlxG.bgColor = 0xffaaaaaa;
       var i:int;
       prices = [5, 1000, 2000, 5000];
-    //  prices = [5, 10, 20, 50]; // test
+//      prices = [5, 10, 20, 50]; // test
       startTime = FlxU.getTicks();
       currDayInt = 0;
       gameOverTime = false;
@@ -184,7 +185,6 @@ package
       add(currDay);
       
       endgameFade = new FlxSprite(270, 0);
-      lastEventDay = 0;
 		}
 
     // equivalent to draw() function in processing
@@ -217,6 +217,7 @@ package
           add(newSign.legendSprite);
           P1.cash -= prices[0] + (15 * Math.pow(P1.signs, 2));
           P1.signs++;
+          P1menu.buyFlash('sign');
         }
       }
       // Radio
@@ -227,7 +228,8 @@ package
           for (var i:int = 0; i < 4; i++) {
             radios.members[i].purchase(true)
           }
-          legend.purchased("radio", true);                            
+          legend.purchased("radio", true);  
+          P1menu.buyFlash('radio');
           P1menu.radioOwned.text = "Owned";
           P2menu.radioOwned.text = "";
           
@@ -237,7 +239,8 @@ package
       else if (FlxG.keys.justPressed("THREE")) {
         if (P1.cash >= prices[2]) {
           myTV.purchase(true);
-          legend.purchased("tv", true);                            
+          legend.purchased("tv", true);   
+          P1menu.buyFlash('tv');
           P1.cash -= prices[2];
           prices[2] *= 1.5;  
           P1menu.tvOwned.text = "Owned";
@@ -251,6 +254,7 @@ package
           prices[3] *= 1.5;              
           mySpeech.purchase(true);
           legend.purchased("speech", true);
+          P1menu.buyFlash('speech');
           P1menu.speechOwned.text = "Owned";
           P2menu.speechOwned.text = "";          
         }
@@ -265,6 +269,7 @@ package
           add(newSign);
           newSign.legendSprite = legend.purchasedSign(newSign.x, newSign.y, newSign.isBlue);
           add(newSign.legendSprite);
+          P2menu.buyFlash('sign');
           P2.cash -= prices[0] + (15 * Math.pow(P2.signs, 2));
           P2.signs++;
         }
@@ -278,6 +283,7 @@ package
             radios.members[i].purchase(false);
           }
           legend.purchased("radio", false);                            
+          P2menu.buyFlash('radio');
           P2menu.radioOwned.text = "Owned";
           P1menu.radioOwned.text = "";          
         }
@@ -290,7 +296,9 @@ package
           P2.cash -= prices[2];
           prices[2] *= 1.5;  
           P2menu.tvOwned.text = "Owned";
-          P1menu.tvOwned.text = "";            
+          P1menu.tvOwned.text = "";   
+          P2menu.buyFlash('tv');
+
         }
       }
       // Speech
@@ -300,6 +308,7 @@ package
           prices[3] *= 1.5;              
           mySpeech.purchase(false);
           legend.purchased("speech", false);
+          P2menu.buyFlash('speech');
           P2menu.speechOwned.text = "Owned";
           P1menu.speechOwned.text = "";            
         }
@@ -308,6 +317,7 @@ package
       // Move to next day
       currDayInt = Math.floor((FlxU.getTicks() - startTime) / 4000);
       if (currDayInt <= 60) {
+
         // spawn random events
         if (currDayInt%13 == 0) {
      //   if (currDayInt == 7 || currDayInt == 3 || currDayInt == 5){ // testing
@@ -380,7 +390,7 @@ package
         currDay.text = "Day: " + currDayInt;
         super.update();
       }
-      else if (!gameOverTime){ // set up gameover screen
+      else if (!gameOverTime) { // set up gameover screen        
         endgameFade.makeGraphic(960, 727, 0x77000000);
         add(endgameFade);
         var gameOver:FlxText;
@@ -588,6 +598,10 @@ package
           ped2.influenced++;
         }
       }
+    }
+    
+    public function flashText(myText:FlxText):void {
+      
     }
     
     public function changeDir(ped1:Pedestrian, build:FlxObject):void {
