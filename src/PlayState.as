@@ -175,6 +175,17 @@ package
       progressBar = new FlxSprite(735, 735); // range from 335 to 1135      
       progressBar.makeGraphic(20, 50, 0xff000000);
       add(progressBar);
+      var leftHead:FlxSprite = new FlxSprite(210, 695);
+      leftHead.loadGraphic(P1.head);
+      leftHead.scale.x = 0.35;
+      leftHead.scale.y = 0.35;
+      add(leftHead);
+      var rightHead:FlxSprite = new FlxSprite(1170, 695);
+      rightHead.loadGraphic(P2.head);
+      rightHead.scale.x = 0.35;
+      rightHead.scale.y = 0.35;
+      add(rightHead);
+      
       
       legend = new Legend();
       add(legend);
