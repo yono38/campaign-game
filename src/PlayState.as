@@ -270,6 +270,7 @@ package
       FlxG.collide(P1Runner, buildings);
       FlxG.collide(P2Runner, buildings);
 
+      
       // don't start game until countdown!
       
       // Player 1 Purchases
@@ -295,9 +296,14 @@ package
       buyTvTxt.text = "";
       FlxG.overlap(P1Runner, tvBuyArea, buyTv);
       
+      // reset speeching for next turn
+      mySpeech.speechingNow = false;
+      
       // Speech
       buySpeechTxt.text = "";
       FlxG.overlap(P1Runner, speechBuyArea, buySpeech);
+      FlxG.overlap(P1Runner, speechBuyArea, mySpeech.speeching);
+
       
       // Player 2 Purchases
        // Sign
@@ -322,13 +328,15 @@ package
 
       // Speech
       FlxG.overlap(P2Runner, speechBuyArea, buySpeech);
+      FlxG.overlap(P2Runner, speechBuyArea, mySpeech.speeching);
           
+      
       // Move to next day
       currDayInt = Math.floor((FlxU.getTicks() - startTime) / 4000);
       if (currDayInt <= 60) {
 
-        // spawn random events
-        if (currDayInt%13 == 0) {
+      // spawn random events
+      if (currDayInt%13 == 0) {
      //   if (currDayInt == 7 || currDayInt == 3 || currDayInt == 5){ // testing
           var chance:Number = Math.random();
           if (chance <= 0.005 && lastEventDay != currDayInt) {
@@ -399,7 +407,9 @@ package
         currDay.text = "Day " + currDayInt;
         super.update();
       }
-      else if (!gameOverTime) { // set up gameover screen        
+      
+      // set up gameover screen    
+      else if (!gameOverTime) {     
         endgameFade.makeGraphic(960, 727, 0x77000000);
         add(endgameFade);
         var gameOver:FlxText;
