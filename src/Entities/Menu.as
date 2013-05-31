@@ -84,7 +84,7 @@ package Entities
 			add(cashText);
 
 			// cash
-			voterText = new FlxText(x + 20, 180, 300, "$" + usr.voters);
+			voterText = new FlxText(x + 20, 180, 300, "Voters: 0");
 			voterText.size = 21;
 			voterText.color = color;
 			add(voterText);			
@@ -98,7 +98,7 @@ package Entities
         keys = [7, 8, 9, 0];
       }
       
-			signText = new FlxText(x + 20, 240, 300, keys[0]+") Sign: $");
+			signText = new FlxText(x + 20, 240, 300, keys[0]+") Sign: $5");
 			signText.size = 21;
 			signText.color = color;
 			add(signText);

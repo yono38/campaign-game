@@ -59,8 +59,12 @@ package
     public var endgameFade:FlxSprite;
     private var gameOverTime:Boolean;
     
-    public var dailyScreens:Array;
-    private var lastDayGrab:uint;
+    private var startLbl:StartLabels;
+    
+    private var countdownBckgrd:FlxSprite;
+    private var countdownText:FlxText;
+    
+    private var countdown:Boolean;
     
     private function randomNumber(low:Number=0, high:Number=1):Number {
       return Math.floor(Math.random() * (1+high-low)) + low;
@@ -71,8 +75,8 @@ package
       //Set the background color to light gray (0xAARRGGBB)
 			FlxG.bgColor = 0xffaaaaaa;
       var i:int;
- //     prices = [5, 1000, 2000, 5000];
-      prices = [5, 10, 20, 50]; // test
+      prices = [5, 1000, 2000, 5000];
+ //     prices = [5, 10, 20, 50]; // test
       startTime = FlxU.getTicks();
       currDayInt = 0;
       gameOverTime = false;
@@ -183,6 +187,7 @@ package
         var nPed:FlxSprite = new Pedestrian(randomNumber(300,1200), randomNumber(0, FlxG.height));
         peds.add(nPed);
       }
+      peds.exists = false;
       add(peds);
       
       // used for storing convos
@@ -227,7 +232,7 @@ package
       dayBkgrd.makeGraphic(150, 50, 0xffbbbbbb);
       add(dayBkgrd);      
       
-      currDay = new FlxText(690, 680, 400, "Day " + FlxU.formatTicks(startTime, FlxU.getTicks()));
+      currDay = new FlxText(690, 680, 400, "Day 0");
       currDay.size = 30;
       currDay.color = 0xff000000;
       add(currDay);
@@ -235,13 +240,21 @@ package
       endgameFade = new FlxSprite(270, 0);
       
       // test start labels
-      var testLbl:StartLabels = new StartLabels();
-      add(testLbl);
+      startLbl = new StartLabels();
+      add(startLbl);
+      
+      countdown = true;
+      startCountdown();
 		}
 
     // equivalent to draw() function in processing
 		override public function update():void
 		{
+      if (countdown) {
+        return;
+      }
+      peds.exists = true;
+     
       // stops peds from hanging out at buildings
       FlxG.collide(peds, buildings, changeDir);
       
@@ -257,6 +270,8 @@ package
       FlxG.collide(P1Runner, buildings);
       FlxG.collide(P2Runner, buildings);
 
+      // don't start game until countdown!
+      
       // Player 1 Purchases
       // Sign
       if (FlxG.keys.justPressed("ONE")) {
@@ -670,7 +685,44 @@ package
     public function changeDir(ped1:Pedestrian, build:FlxObject):void {
       ped1.changeDir();
     }
-  
+    
+    
+    public function startCountdown():void {
+            // sets up the timer
+      var flashTimer:FlxTimer = new FlxTimer();
+      countdownBckgrd = new FlxSprite(FlxG.width/2 - 300, 25);
+      countdownBckgrd.makeGraphic(600, 70, 0xFFbbbbbb);
+      add(countdownBckgrd);
+      
+      countdownText = new FlxText(FlxG.width/2 - 275, 30, FlxG.width/2, "Starting in 3...");
+      countdownText.size = 40;
+      add(countdownText);
+      
+      var i:uint = 1;
+      flashTimer.start(1, 4, function():void { runCountdown(i++); } );
+    }
+     
+    private function runCountdown(i:uint):void
+    {
+      
+      if (i == 1) {
+        countdownText.text = "Starting in 3...2...";
+      }
+      else if (i==2) {
+        countdownText.text = "Starting in 3...2...1...";
+        }
+      else if (i == 3) {
+        countdownText.text = "Starting in 3...2...1...Go!";
+        countdown = false;
+        startLbl.fadeAndDie();
+        startTime = FlxU.getTicks();
+      }
+      else if (i == 4) {
+        countdownBckgrd.kill();
+        countdownText.kill();
+      }
+    }
+    
     
 	}
 

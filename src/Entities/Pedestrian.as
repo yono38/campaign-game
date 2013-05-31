@@ -8,7 +8,7 @@ package Entities
 	
 	public class Pedestrian extends FlxSprite
 	{
-    [Embed (source = '../../gfx/personSpritesheet.png')] private var person:Class;
+    [Embed (source = '../../gfx/personSpritesheet_new.png')] private var person:Class;
     
     protected var timeStep:int;
     protected var timeCount:int;
