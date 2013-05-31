@@ -34,6 +34,9 @@ package Entities
       var radio3:FlxSprite = new FlxSprite(x + 154, y + 84);
       radio3.makeGraphic(8, 8, 0xff000000);
       radios.add(radio3);
+      var radio4:FlxSprite = new FlxSprite(36, 592);
+      radio4.makeGraphic(8, 8, 0xff000000);
+      radios.add(radio4);
       add(radios);
     }
     

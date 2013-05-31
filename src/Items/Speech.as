@@ -31,6 +31,8 @@ package Items
       speechSprite.exists = false;
       add(speechSprite);
       
+      
+      
     }
     
     public function purchase(blue:Boolean):void {

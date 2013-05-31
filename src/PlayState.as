@@ -233,6 +233,10 @@ package
       add(currDay);
       
       endgameFade = new FlxSprite(270, 0);
+      
+      // test start labels
+      var testLbl:StartLabels = new StartLabels();
+      add(testLbl);
 		}
 
     // equivalent to draw() function in processing
