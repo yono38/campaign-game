@@ -75,8 +75,8 @@ package
       //Set the background color to light gray (0xAARRGGBB)
 			FlxG.bgColor = 0xffaaaaaa;
       var i:int;
-      prices = [5, 1000, 2000, 5000];
-  //    prices = [5, 10, 20, 50]; // test
+  //    prices = [5, 1000, 2000, 5000];
+      prices = [5, 10, 20, 50]; // test
       startTime = FlxU.getTicks();
       currDayInt = 0;
       gameOverTime = false;

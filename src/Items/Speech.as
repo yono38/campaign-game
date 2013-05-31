@@ -36,8 +36,7 @@ package Items
       speechSprite = new FlxSprite(xpos, ypos);
       speechSprite.loadGraphic(speechSpritesheet, true, false, 70, 56, false);
       speechSprite.addAnimation("empty", [0], 0, false);
-      speechSprite.addAnimation("blue", [1,4], 5, true);
-      speechSprite.addAnimation("red", [2, 5], 5, true);
+      speechSprite.addAnimation("playing", [1,3], 5, true);
       speechSprite.play("empty");
       add(speechSprite);
 
@@ -46,8 +45,7 @@ package Items
     override public function update():void {
       if (speechingNow) {
         field.exists = true;
-        if (purchasedBlue) speechSprite.play("blue");
-        else speechSprite.play("red");
+        speechSprite.play("playing");
       } 
       else {
         speechSprite.play("empty");
