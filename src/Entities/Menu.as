@@ -98,7 +98,7 @@ package Entities
         keys = [7, 8, 9, 0];
       }
       
-			signText = new FlxText(x + 20, 240, 300, keys[0]+") Sign: $5");
+			signText = new FlxText(x + 20, 240, 300, keys[0]+") Sign: $50");
 			signText.size = 21;
 			signText.color = color;
 			add(signText);
