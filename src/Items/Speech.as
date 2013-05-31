@@ -9,7 +9,7 @@ package Items
   import Entities.InfluenceField;
   public class Speech extends FlxGroup
   {
-    [Embed(source = '../../gfx/items/speechSpritesheet.png')] private var speechSpritesheet:Class;
+    [Embed(source = '../../gfx/items/speechSpritesheet_new.png')] private var speechSpritesheet:Class;
     public var speechSprite:FlxSprite;
     public var field:InfluenceField;
     public var x:uint;
@@ -26,9 +26,11 @@ package Items
       
       speechSprite = new FlxSprite(xpos, ypos);
       speechSprite.loadGraphic(speechSpritesheet, true, false, 70, 56, false);
-      speechSprite.addAnimation("red", [1,3], 5, true);
-      speechSprite.addAnimation("blue", [0, 2], 5, true);
-      speechSprite.exists = false;
+      speechSprite.addAnimation("empty", [0], 0, false);
+      speechSprite.addAnimation("blue", [1,4], 5, true);
+      speechSprite.addAnimation("red", [2, 5], 5, true);
+      speechSprite.play("empty");
+   //   speechSprite.exists = false;
       add(speechSprite);
       
       
