@@ -60,6 +60,7 @@ package
     private var gameOverTime:Boolean;
     
     private var startLbl:StartLabels;
+    private var labelShowTxt:FlxText;
     
     private var countdownBckgrd:FlxSprite;
     private var countdownText:FlxText;
@@ -243,6 +244,11 @@ package
       startLbl = new StartLabels();
       add(startLbl);
       
+      labelShowTxt = new FlxText(1245, 620, 320, "");
+      labelShowTxt.size = 25;
+      labelShowTxt.color = 0xFF000000;
+      add(labelShowTxt);
+      
       countdown = true;
       startCountdown();
 		}
@@ -254,6 +260,16 @@ package
         return;
       }
       peds.exists = true;
+      
+      labelShowTxt.text = "Hold G to show influence areas";
+      
+      // deal with startlabels - show on G
+      if (FlxG.keys.G == true) {
+        startLbl.exists = true;
+      }
+      else {
+        startLbl.exists = false;
+      }
      
       // stops peds from hanging out at buildings
       FlxG.collide(peds, buildings, changeDir);

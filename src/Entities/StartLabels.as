@@ -105,7 +105,11 @@ package Entities
 			dieTimer.removeEventListener(TimerEvent.TIMER, fadeText);
 			dieTimer.removeEventListener(TimerEvent.TIMER_COMPLETE, dieText);	
       trace("labels killed");
-			kill();
+      var i:uint;
+      for (i = 0; i < this.length; i++) {
+        this.members[i].alpha = 1;
+      }
+      exists = false;
 		}
 		
 		private function fadeText(e:Event):void 
